@@ -1,0 +1,213 @@
+zz<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Code Yatra Bank</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+/* Body and background */
+body {
+  background-color: var(--main-bg);
+  color: var(--text-body);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+header {
+  background-color: var(--primary-blue);
+  color: var(--text-white);
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+header .brand {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+header .brand img {
+  height: 30px;
+  margin-right: 10px;
+  filter: brightness(0) invert(1);
+}
+
+header .logout {
+  color: var(--text-white);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+header .logout:hover {
+  color: var(--secondary-blue);
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  width: 220px;
+  position: fixed;
+  top: 50px;
+  bottom: 40px;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+  border-right: 1px solid var(--section-bg);
+}
+
+.sidebar h5 {
+  color: var(--text-heading);
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+  color: var(--sidebar-text);
+  text-decoration: none;
+  font-weight: 600;
+  display: block;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+  color: var(--sidebar-hover-text);
+  background-color: var(--sidebar-hover-bg);
+}
+
+/* Main content */
+main {
+  margin-top: 50px;
+  margin-left: 220px;
+  margin-bottom: 40px;
+  padding: 20px;
+  background-color: var(--main-bg);
+  min-height: calc(100vh - 90px);
+  box-sizing: border-box;
+}
+
+/* Main title */
+main h1 {
+  color: var(--text-heading);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* Greeting */
+main .greeting {
+  color: var(--text-body);
+  margin-bottom: 20px;
+}
+
+/* Dashboard cards */
+.dashboard-cards {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.dashboard-card {
+  background-color: var(--section-bg);
+  border: 1px solid var(--primary-blue);
+  border-radius: 6px;
+  padding: 20px;
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.dashboard-card h3 {
+  color: var(--text-heading);
+  margin-bottom: 10px;
+}
+
+.dashboard-card .value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-heading);
+}
+
+/* Footer */
+footer {
+  background-color: var(--footer-bg);
+  color: var(--text-white);
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 0.9rem;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1B2A49; height: 50px; position: fixed; top: 0; width: 100%; z-index: 1030;">
+            <div class="container-fluid" style="padding-left: 0; padding-right: 0;">
+                <a class="navbar-brand d-flex align-items-center" href="#">
+                    <img src="{{ url_for('static', filename='image/Code_yatra_bank_logo.png') }}" alt="Code Yatra Bank Logo" style="height: 30px; margin-right: 10px;" />
+                    <span style="font-weight: bold; font-size: 1.25rem; color: #FFFFFF;">Code Yatra Bank</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        {% if 'user_role' in session %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('logout') }}" style="color: #FFFFFF;">Logout</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('login') }}" style="color: #FFFFFF;">Login</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main style="margin-left: 0; padding-left: 0; flex-grow: 1; padding-top: 20px; padding-right: 20px; padding-bottom: 20px; background-color: #F8F9FA;">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer style="background-color: #1B2A49; color: #FFFFFF; height: 40px; display: flex; align-items: center; justify-content: center; position: fixed; bottom: 0; width: 100%; box-sizing: border-box; font-size: 0.9rem;">
+        <p>&copy; 2025 Code Yatra Bank</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

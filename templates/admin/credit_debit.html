@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Sidebar -->
+<nav class="sidebar">
+    <div class="sidebar-sticky">
+        <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            Admin Menu
+        </h5>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin_dashboard') }}">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin_users') }}">
+                            View All Users
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin_add_user') }}">
+                            Add New User
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('admin_credit_debit') }}">
+                            Credit/Debit Money
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin_transactions') }}">
+                            View Transactions
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin_requests') }}">
+                            Approve Requests
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main style="margin-left: 220px; padding: 20px;">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Credit/Debit Money</h1>
+            </div>
+            <form method="post" class="col-md-6">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    {{ form.user_id.label(class="form-label") }}
+                    {{ form.user_id(class="form-control") }}
+                </div>
+                <div class="mb-3">
+                    {{ form.amount.label(class="form-label") }}
+                    {{ form.amount(class="form-control") }}
+                </div>
+                <div class="mb-3">
+                    {{ form.transaction_type.label(class="form-label") }}
+                    {{ form.transaction_type(class="form-select") }}
+                </div>
+                <div class="mb-3">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+            </form>
+        </main>
+    </div>
+</div>
+{% endblock %}

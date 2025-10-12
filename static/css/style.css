@@ -1,0 +1,25 @@
+/* Executive Professionalism Theme - Deep Blues & Crisp Grays */
+
+/* Color Palette */
+:root {
+  --primary-blue: #1B2A49;
+  --secondary-blue: #4A90E2;
+  --main-bg: #F8F9FA;
+  --section-bg: #E9ECEF;
+  --text-heading: #343A40;
+  --text-body: #6C757D;
+  --text-white: #FFFFFF;
+  --sidebar-bg: #FFFFFF;
+  --sidebar-text: #1B2A49;
+  --sidebar-hover-bg: #F5F5F5;
+  --sidebar-hover-text: #4A90E2;
+  --footer-bg: #1B2A49;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  background-color: var(--main-bg); /* Set uniform background color */
+}

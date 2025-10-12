@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Sidebar -->
+<nav class="sidebar">
+    <div class="sidebar-sticky">
+        <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            Admin Menu
+        </h5>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin_dashboard') }}">
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ url_for('admin_users') }}">
+                    View All Users
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin_add_user') }}">
+                    Add New User
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin_credit_debit') }}">
+                    Credit/Debit Money
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin_transactions') }}">
+                    View Transactions
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin_requests') }}">
+                    Approve Requests
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}">
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Main content -->
+<main style="margin-left: 220px; padding: 20px;">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">All Users</h1>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Account Number</th>
+                    <th>MPIN</th>
+                    <th>Role</th>
+                    <th>Balance</th>
+                    <th>IFSC Code</th>
+                    <th>MICR Code</th>
+                    <th>CIF No</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.account_no }}</td>
+                    <td>{{ user.mpin }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>₹{{ "%.2f"|format(user.balance) }}</td>
+                    <td>{{ user.ifsc_code }}</td>
+                    <td>{{ user.micr_code }}</td>
+                    <td>{{ user.cif_no }}</td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ user.account_no }}">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<!-- Delete Modals -->
+{% for user in users %}
+<div class="modal fade" id="deleteModal{{ user.account_no }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ user.account_no }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel{{ user.account_no }}">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete user "{{ user.name }}"?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form action="{{ url_for('admin_delete_user', account_no=user.account_no) }}" method="post" style="display: inline;">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    Admin Menu
+                </h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin_dashboard') }}">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin_users') }}">
+                            View All Users
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin_add_user') }}">
+                            Add New User
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin_credit_debit') }}">
+                            Credit/Debit Money
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('admin_transactions') }}">
+                            View Transactions
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin_requests') }}">
+                            Approve Requests
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">All Transactions</h1>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>Type</th>
+                            <th>Sender Account</th>
+                            <th>Receiver Account</th>
+                            <th>Amount</th>
+                            <th>Currency</th>
+                            <th>Status</th>
+                            <th>Method</th>
+                            <th>Balance After</th>
+                            <th>Transaction Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction.get('transaction_id', transaction.get('txn_id', '')) }}</td>
+                            <td>{{ transaction.get('type', '') }}</td>
+                            <td>{{ transaction.get('sender_account', transaction.get('sender_acc', '')) }}</td>
+                            <td>{{ transaction.get('receiver_account', transaction.get('receiver_acc', '')) }}</td>
+                            <td>₹{{ "%.2f"|format(transaction.get('amount', 0)) }}</td>
+                            <td>{{ transaction.get('currency', 'INR') }}</td>
+                            <td>{{ transaction.get('status', 'completed') }}</td>
+                            <td>{{ transaction.get('method', 'Transfer') }}</td>
+                            <td>₹{{ "%.2f"|format(transaction.get('balance_after_transaction', 0)) }}</td>
+                            <td>{{ transaction.get('transaction_time', {}).get('date', transaction.get('date', '')) }} {{ transaction.get('transaction_time', {}).get('time', '') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

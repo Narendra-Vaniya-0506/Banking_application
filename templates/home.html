@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block header %}
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #1C4E80; min-height: 70px;">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center">
+                <img src="{{ url_for('static', filename='image/Code_yatra_bank_logo.png') }}" alt="Code Yatra Bank Logo" style="height: 45px; margin-right: 10px;">
+                <span style="font-weight: bold; font-size: 1.6rem;">Code Yatra Bank</span>
+            </a>
+            <div class="ms-auto">
+                <a href="{{ url_for('login') }}" class="btn btn-light me-2">Login as User</a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-light">Login as Admin</a>
+            </div>
+        </div>
+    </nav>
+</header>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="text-white text-center" style="background: linear-gradient(rgba(27, 42, 73, 0.85), rgba(27, 42, 73, 0.85)), url('{{ url_for('static', filename='image/Ai_bank.jpeg') }}') no-repeat center center; background-size: cover;">
+    <div class="container-fluid py-5 px-0">
+        <h1 class="display-3 fw-bold mb-3">Welcome to Code Yatra Bank</h1>
+        <p class="lead fs-4 mb-3">India’s Trusted Digital Banking Experience</p>
+        <p class="fs-5 mb-4">Smart • Secure • Seamless Banking</p>
+        <a href="{{ url_for('login') }}" class="btn btn-warning btn-lg px-5 py-3 shadow">Get Started</a>
+    </div>
+</section>
+
+<!-- Card Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h3 class="fw-bold">Our Premium Credit Card</h3>
+                <p class="text-muted">
+                    Experience the ultimate convenience with the Code Yatra Premium Credit Card.
+Make secure transactions anytime, anywhere, with advanced protection features.
+Earn reward points on every purchase and redeem them easily.
+Enjoy exclusive offers on shopping, dining, and travel worldwide.
+Track your spending and manage your card online effortlessly.
+Benefit from flexible payment options tailored to your lifestyle.
+Receive personalized alerts and insights to stay in control of your finances.
+Access premium customer support whenever you need assistance.
+Take advantage of travel insurance and other exclusive perks.
+Elevate your everyday banking experience with Code Yatra Premium Credit Card.
+                </p>
+            </div>
+            <div class="col-md-6 text-end">
+                <img src="{{ url_for('static', filename='image/Crad.jpeg') }}" class="img-fluid rounded" alt="Credit Card" style="max-height: 500px; max-width: 100%;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Slideshow -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div id="bankSlideshow" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{{ url_for('static', filename='image/Ai_bank.jpeg') }}" class="d-block w-100" alt="AI Bank" style="height: 700px; object-fit: cover;">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ url_for('static', filename='image/customer_care.jpeg') }}" class="d-block w-100" alt="Customer Care" style="height: 700px; object-fit: cover;">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ url_for('static', filename='image/festival.jpeg') }}" class="d-block w-100" alt="Festival" style="height: 700px; object-fit: cover;">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#bankSlideshow" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#bankSlideshow" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- About Us -->
+<section class="py-5">
+    <div class="container text-center">
+        <h2 class="mb-4 fw-bold">About Us</h2>
+        <p class="text-muted mx-auto" style="max-width: 700px;">
+            Code Yatra Bank is a modern digital bank built to provide a secure, convenient, and user-friendly banking experience.
+            Whether you want to send money, manage your savings, or request cheque & passbook services, we make banking easier for everyone.
+        </p>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center fw-bold mb-4">Our Services</h2>
+        <div class="row text-center">
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <i class="fas fa-university fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Online Banking</h5>
+                        <p class="card-text">Access your bank anytime, anywhere with secure login.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <i class="fas fa-exchange-alt fa-3x text-success mb-3"></i>
+                        <h5 class="card-title">Money Transfer</h5>
+                        <p class="card-text">Transfer funds instantly using account number or QR code.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <i class="fas fa-clipboard-check fa-3x text-warning mb-3"></i>
+                        <h5 class="card-title">Digital Passbook</h5>
+                        <p class="card-text">Track your real-time transactions with ease.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <i class="fas fa-file-invoice fa-3x text-danger mb-3"></i>
+                        <h5 class="card-title">Cheque & Passbook Request</h5>
+                        <p class="card-text">Apply online and collect from the nearest branch.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Trust Us -->
+<section class="py-5">
+    <div class="container text-center">
+        <h2 class="fw-bold">Why Choose Us?</h2>
+        <p class="text-muted">Your trust, our priority.</p>
+        <div class="row">
+            <div class="col-md-3"><p>✅ 256-bit Bank Level Security</p></div>
+            <div class="col-md-3"><p>✅ Fast & Secure Transactions</p></div>
+            <div class="col-md-3"><p>✅ 24/7 Digital Banking</p></div>
+            <div class="col-md-3"><p>✅ Real Banking Experience UI</p></div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

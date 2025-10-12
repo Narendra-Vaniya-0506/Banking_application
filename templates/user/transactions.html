@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    User Menu
+                </h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('user_dashboard') }}">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('user_balance') }}">
+                            View Balance
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('user_transfer') }}">
+                            Transfer Money
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('user_passbook') }}">
+                            View Passbook
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('user_request') }}">
+                            Request Items
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('user_requests') }}">
+                            My Requests
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('user_transactions') }}">
+                            Transaction History
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+         <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Transaction History</h1>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction.get('type', '') }}</td>
+                            <td>₹{{ "%.2f"|format(transaction.get('amount', 0)) }}</td>
+                            <td>{{ transaction.get('transaction_time', {}).get('date', transaction.get('date', '')) }} {{ transaction.get('transaction_time', {}).get('time', '') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+<script>
+const transactions = {{ transactions | tojson }};
+const ctx = document.getElementById('transactionChart').getContext('2d');
+
+// Sort transactions by date
+transactions.sort((a, b) => {
+    const dateA = a.transaction_time ? new Date(a.transaction_time.timestamp) : new Date(a.date);
+    const dateB = b.transaction_time ? new Date(b.transaction_time.timestamp) : new Date(b.date);
+    return dateA - dateB;
+});
+
+const labels = transactions.map(t => {
+    const date = t.transaction_time ? new Date(t.transaction_time.timestamp) : new Date(t.date);
+    return date.toLocaleDateString();
+});
+const data = transactions.map(t => t.amount);
+const backgroundColors = transactions.map(t => t.type === 'credit' ? 'rgba(75, 192, 192, 0.2)' : 'rgba(255, 99, 132, 0.2)');
+const borderColors = transactions.map(t => t.type === 'credit' ? 'rgba(75, 192, 192, 1)' : 'rgba(255, 99, 132, 1)');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Transaction Amount (₹)',
+            data: data,
+            backgroundColor: backgroundColors,
+            borderColor: borderColors,
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+{% endblock %}

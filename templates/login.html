@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    body, html, .container {
+        background-color: #f8f9fa !important; /* Set a single background color for the whole page */
+        
+    }
+    .auth-section {
+        background: #f8f9fa;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+        margin-bottom: 60px; /* Added margin bottom to prevent overlap with footer */
+    }
+    .bank-image {
+        width: 100%;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+    .form-title {
+        font-weight: 600;
+        color: #1C4E80;
+    }
+    .trust-badges {
+        font-size: 0.9rem;
+        color: #28a745;
+    }
+    label { font-weight: 500; }
+</style>
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h2 class="text-primary" style="color: #1C4E80;">Welcome to Code Yatra Bank</h2>
+        <p>Your trusted partner for secure and seamless digital banking.</p>
+        <p class="trust-badges">🔒 Secure Login | 🔐 256-bit Encryption | ✅ Verified Banking System</p>
+    </div>
+
+    <div class="row">
+
+        <!-- Admin Login -->
+        <div class="col-md-6">
+            <div class="auth-section">
+                <h4 class="form-title">👨‍💼 Admin Login</h4>
+                <form method="POST" action="{{ url_for('login') }}">
+                    <div class="mb-3">
+                        <label>Username</label>
+                        <input type="text" class="form-control" name="username" placeholder="Enter admin username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="Enter admin password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login as Admin</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- User Login -->
+        <div class="col-md-6">
+            <div class="auth-section">
+                <h4 class="form-title">👤 User Login</h4>
+                <form method="POST" action="{{ url_for('login') }}">
+                    <div class="mb-3">
+                        <label>Account Number</label>
+                        <input type="text" class="form-control" name="account_no" placeholder="Enter account number" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>MPIN</label>
+                        <input type="password" class="form-control" name="mpin" maxlength="4" placeholder="Enter 4-digit MPIN" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Login as User</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Registration Form -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="auth-section">
+                <h4 class="form-title">📝 Open New Account</h4>
+                <form method="POST" action="/register">
+                    <div class="mb-2"><label>Name</label><input type="text" class="form-control" name="name" required></div>
+                    <div class="mb-2"><label>Email</label><input type="email" class="form-control" name="email" required></div>
+                    <div class="mb-2"><label>Phone</label><input type="text" class="form-control" name="phone" required></div>
+                    <div class="mb-2"><label>Address</label><textarea class="form-control" name="address" required></textarea></div>
+                    <div class="mb-2"><label>Date of Birth</label><input type="date" class="form-control" name="dob" required></div>
+                    <div class="mb-2"><label>PAN Number</label><input type="text" class="form-control" name="pan" required></div>
+                    <div class="mb-2"><label>Aadhar Number</label><input type="text" class="form-control" name="aadhar" required></div>
+                    <div class="mb-2"><label>Initial Deposit (₹)</label><input type="number" class="form-control" name="deposit" required></div>
+                    <div class="mb-2"><label>Create MPIN</label><input type="password" maxlength="4" class="form-control" name="mpin" required></div>
+                    <button type="submit" class="btn btn-warning w-100 mt-2">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
