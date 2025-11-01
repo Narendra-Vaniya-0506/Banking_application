@@ -22,8 +22,9 @@ def home():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    reg_form = AddUserForm()
     if request.method == 'GET':
-        return render_template("login.html")
+        return render_template("login.html", reg_form=reg_form)
     if request.method == 'POST':
         if 'username' in request.form:
             # Admin login
@@ -51,51 +52,34 @@ def login():
             else:
                 flash('Invalid user credentials')
                 return redirect(url_for('login'))
-    return render_template("login.html")
+    return render_template("login.html", reg_form=reg_form)
 
 @app.route('/register', methods=['POST'])
 def register():
-    name = request.form.get('name')
-    email = request.form.get('email')
-    phone = request.form.get('phone')
-    address = request.form.get('address')
-    dob_str = request.form.get('dob')
-    pan = request.form.get('pan')
-    aadhar = request.form.get('aadhar')
-    initial_deposit = request.form.get('deposit')
-    mpin = request.form.get('mpin')
-
-    # Validate required fields
-    if not all([name, email, phone, address, dob_str, pan, aadhar, initial_deposit, mpin]):
-        flash('Please fill in all required fields.')
+    form = AddUserForm()
+    if form.validate_on_submit():
+        initial_deposit = form.initial_deposit.data
+        if initial_deposit <= 0:
+            flash('Initial deposit must be greater than 0')
+            return redirect(url_for('login'))
+        account_no = User.generate_account_number()
+        name = form.name.data
+        email = form.email.data
+        phone = form.phone.data
+        address = form.address.data
+        dob = form.dob.data
+        pan = form.pan.data
+        aadhar = form.aadhar.data
+        mpin = form.mpin.data
+        user = User(account_no, name, email, mpin, balance=initial_deposit, phone=phone, address=address, dob=dob, pan=pan, aadhar=aadhar)
+        user.save()
+        flash(f'Registration successful! Your account number is {account_no}. Please login.')
         return redirect(url_for('login'))
-
-    # Convert dob string to date object (input type="date" sends yyyy-mm-dd)
-    try:
-        dob = datetime.strptime(dob_str, '%Y-%m-%d')
-    except ValueError:
-        flash('Invalid date format for Date of Birth.')
+    else:
+        for field, errors in form.errors.items():
+            for error in errors:
+                flash(f'{field}: {error}')
         return redirect(url_for('login'))
-
-    # Generate new account number
-    account_no = User.generate_account_number()
-
-    # Create new user object
-    user = User(
-        account_no=account_no,
-        name=name,
-        email=email,
-        phone=phone,
-        address=address,
-        dob=dob,
-        pan=pan,
-        aadhar=aadhar,
-        balance=float(initial_deposit),
-        mpin=mpin
-    )
-    user.save()
-    flash(f'Registration successful! Your account number is {account_no}. Please login.')
-    return redirect(url_for('login'))
 
 @app.route('/logout')
 def logout():
