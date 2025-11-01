@@ -64,7 +64,7 @@ The purpose of this project is to create a functional banking application protot
 ### Installation Steps
 1. **Clone the Repository:**
    ```
-   git clone <repository-url>
+   git clone https://github.com/Narendra-Vaniya-0506/Banking_application.git
    cd codeyatra-bank
    ```
 
